@@ -21,6 +21,8 @@
 			font-family: RobotoCustom;
 			background-color: #000000;
 			color: #ffffff;
+			-webkit-user-drag: none;
+			-webkit-user-select: none;
 		}
 		.fullscreen {
 			position: absolute;
@@ -188,7 +190,7 @@
 </body>
 
 <script>
-    //window.addEventListener("contextmenu", function(e) { e.preventDefault(); });
+    window.addEventListener("contextmenu", function(e) { e.preventDefault(); });
 
     var mainView = document.getElementById("mainView");
     var videoView = document.getElementById("videoView");
