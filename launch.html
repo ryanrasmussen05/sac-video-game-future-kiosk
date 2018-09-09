@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Video Game Future</title>
+	<style>
+		@font-face {
+			font-family: "RobotoCustom";
+			font-weight: 400;
+			src: url("assets/Roboto-Regular.ttf") format("truetype");
+		}
+
+		@font-face {
+			font-family: "RobotoCustom";
+			font-weight: 700;
+			src: url("assets/Roboto-Bold.ttf") format("truetype");
+		}
+
+		/*GLOBAL STYLES*/
+		body {
+			margin: 0;
+			font-family: RobotoCustom;
+			background-color: #000000;
+			color: #ffffff;
+		}
+		.fullscreen {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		/*MAIN VIEW STYLES*/
+		#mainView {
+			display: flex;
+			flex-direction: column;
+		}
+		#mainViewTitle {
+			flex-shrink: 0;
+			text-align: center;
+			font-weight: 700;
+		}
+		#mainViewButtons {
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			align-items: center;
+			padding: 0 100px;
+		}
+		.videoButtons {
+			flex: 1;
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+		}
+		.videoButton {
+			width: 350px;
+			height: 350px;
+			display: flex;
+			flex-direction: column;
+			cursor: pointer;
+			border: 2px solid white;
+			border-radius: 42px;
+			overflow: hidden;
+		}
+		.videoTitle {
+			text-align: center;
+			font-size: 40px;
+			margin: 10px 0;
+		}
+		.videoImage {
+			flex: 1;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+
+		/*VIDEO VIEW STYLES*/
+		#videoView {
+			display: flex;
+			flex-direction: column;
+		}
+		#backButtonContainer {
+			flex-shrink: 0;
+			margin: 10px;
+			font-size: 30px;
+			color: navy;
+		}
+		#videoTitle {
+			flex-shrink: 0;
+			font-size: 115px;
+			text-align: center;
+			padding-bottom: 20px;
+		}
+		#videoContainer {
+			flex-grow: 1;
+			position: relative;;
+		}
+		#bottomSpacer {
+			flex-shrink: 0;
+			height: 100px;
+		}
+		video {
+			width: 100%;
+			height: 100%;
+		}
+		.backButton {
+			cursor: pointer;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			display: flex;
+			align-items: center;
+			font-size: 50px;
+		}
+		.backIcon {
+			height: 80px;
+			margin-right: 10px;
+		}
+	</style>
+</head>
+
+<body>
+
+<div id="mainView" class="fullscreen">
+	<div id="mainViewTitle">
+		<div style="font-size: 115px">VR & The Future of Gaming</div>
+		<div style="font-size: 40px; font-weight: 400; margin-bottom: 70px;">Click an image to play a video</div>
+	</div>
+	<div id="mainViewButtons">
+		<div class="videoButtons">
+			<div class="videoButton" onclick="playVideo('assets/controlvr.mp4', 'Control VR')">
+				<div class="videoTitle">Control VR</div>
+				<div class="videoImage" style="background-image: url('assets/controlvr.png')"></div>
+			</div>
+
+			<div class="videoButton" onclick="playVideo('assets/vrgloves.mp4', 'VR Gloves')">
+				<div class="videoTitle">VR Gloves</div>
+				<div class="videoImage" style="background-image: url('assets/vrgloves.png')"></div>
+			</div>
+
+			<div class="videoButton" onclick="playVideo('assets/8kheadsets.mp4', '8K Headsets')">
+				<div class="videoTitle">8K Headsets</div>
+				<div class="videoImage" style="background-image: url('assets/8kheadsets.png')"></div>
+			</div>
+
+			<div class="videoButton" onclick="playVideo('assets/chairs.mp4', 'Motion Chairs')">
+				<div class="videoTitle">Motion Chairs</div>
+				<div class="videoImage" style="background-image: url('assets/chairs.png')"></div>
+			</div>
+
+			<div class="videoButton" onclick="playVideo('assets/treadmill.mp4', 'Omni-Directional Treadmills')">
+				<div class="videoTitle">Treadmills</div>
+				<div class="videoImage" style="background-image: url('assets/treadmill.png')"></div>
+			</div>
+
+			<div class="videoButton" onclick="playVideo('assets/hololens.mp4', 'Hololens')">
+				<div class="videoTitle">Hololens</div>
+				<div class="videoImage" style="background-image: url('assets/hololens.png')"></div>
+			</div>
+
+			<div class="videoButton" onclick="playVideo('assets/suit.mp4', 'Tesla Suit')">
+				<div class="videoTitle">Tesla Suit</div>
+				<div class="videoImage" style="background-image: url('assets/suit.png')"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="videoView" class="fullscreen" style="display: none">
+	<div id="videoTitle">Video Title</div>
+	<div id="videoContainer">
+		<div class="fullscreen">
+			<video id="videoPlayer">
+				Your browser does not support HTML5 video.
+			</video>
+		</div>
+	</div>
+	<div id="bottomSpacer"></div>
+	<div class="backButton" onclick="goToHome()">
+		<img class="backIcon" src="assets/back.png">Back
+	</div>
+</div>
+
+</body>
+
+<script>
+    //window.addEventListener("contextmenu", function(e) { e.preventDefault(); });
+
+    var mainView = document.getElementById("mainView");
+    var videoView = document.getElementById("videoView");
+    var videoPlayer = document.getElementById("videoPlayer");
+    var videoTitle = document.getElementById("videoTitle");
+
+    videoPlayer.onended = function() {
+        goToHome();
+    };
+
+    function playVideo(videoFile, title) {
+        mainView.style.display = "none";
+        videoView.style.display = "flex";
+
+        videoTitle.innerText = title;
+
+        videoPlayer.src = videoFile;
+        videoPlayer.volume = 1.0;
+        videoPlayer.load();
+        videoPlayer.play();
+    }
+
+    function goToHome() {
+        mainView.style.display = "flex";
+        videoView.style.display = "none";
+
+        videoPlayer.pause();
+    }
+</script>
+
+</html>
